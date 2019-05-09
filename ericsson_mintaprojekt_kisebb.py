@@ -1,5 +1,4 @@
 import turtle as t
-import time
 import random
 
 """
@@ -43,7 +42,7 @@ def kiiras(szoveg, y):
 
 def torles(y):
     t.fillcolor("#778899") # vilagoskek
-    teglalap(-400, y+30, 800, 30)
+    teglalap(-400, y+35, 800, 35)
 
 def hatter():
     # eg
@@ -82,6 +81,9 @@ fa()
 for alma_hely in alma_helyek:
     alma_lerak(*alma_hely)
 
+felso_sor = -170
+also_sor = -230
+
 # Most jöhetnek az adatok. A feladványokat külön plain text fájlból hívjuk be.
 with open("feladvanyok.txt", encoding = "utf8") as file:
     feladvanyok = file.read().splitlines()
@@ -100,10 +102,10 @@ hibak = []
 
 # És most jön a játék fő ciklusa:
 while not feladvany == megfejtes and len(hibak) < 7:
-    torles(-150)
-    kiiras(megfejtes, -150)
-    torles(-200)
-    kiiras("".join(hibak), -200)
+    torles(felso_sor)
+    kiiras(megfejtes, felso_sor)
+    torles(also_sor)
+    kiiras("".join(hibak), also_sor)
     tipp = ""
     # Minden körben tippet kérünk a játékostól:
     while not tipp in nemvoltmeg:
@@ -122,15 +124,14 @@ while not feladvany == megfejtes and len(hibak) < 7:
         hibak.append(tipp)
     nemvoltmeg.remove(tipp)
 
-# Játék vége: nyertünk vagy vesztettünk?
+# Játék vége: kiírjuk kitakarás nélkül a megfejtést:
+torles(felso_sor)
+kiiras(feladvany, felso_sor)
+# Nyertünk vagy vesztettünk?
+torles()
 if 7 <= len(hibak):
-    torles(-360)
-    kiiras("Vége! :(", -360)
+    kiiras("Vége! :(", also_sor)
 else:
-    torles(-360)
-    kiiras("Szuper! :)", -360)
-# Akár nyertünk, akár vesztettünk, kiírjuk kitakarás nélkül a megfejtést:
-torles(-300)
-kiiras(feladvany, -300)
+    kiiras("Szuper! :)", also_sor)
 # Ez azért kell, hogy ne záruljon be az ablak:
 t.done()
